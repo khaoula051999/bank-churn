@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
-import sklearn  # Import de scikit-learn pour vérifier la version
+import sklearn  
+from flask_cors import CORS, cross_origin  # type: ignore
 
 app = Flask(__name__)
-
-# Afficher la version de scikit-learn
-print("Scikit-learn version:", sklearn.__version__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Charger le modèle et le scaler
 with open('model/best_model.pkl', 'rb') as f:
@@ -16,6 +16,7 @@ with open('model/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
 @app.route('/predict', methods=['POST'])
+@cross_origin()
 def predict():
     data = request.get_json()
 
