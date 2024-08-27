@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churn Prediction</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Churn Prediction</h1>
+        <form id="predict-form">
+            <label for="CreditScore">Credit Score:</label>
+            <input type="number" id="CreditScore" name="CreditScore" required>
+
+            <label for="Age">Age:</label>
+            <input type="number" id="Age" name="Age" required>
+
+            <label for="Tenure">Tenure:</label>
+            <input type="number" id="Tenure" name="Tenure" required>
+
+            <label for="Balance">Balance:</label>
+            <input type="number" id="Balance" name="Balance" required>
+
+            <label for="NumOfProducts">Number of Products:</label>
+            <input type="number" id="NumOfProducts" name="NumOfProducts" required>
+
+            <label for="HasCrCard">Has Credit Card (1 for Yes, 0 for No):</label>
+            <input type="number" id="HasCrCard" name="HasCrCard" required>
+
+            <label for="IsActiveMember">Is Active Member (1 for Yes, 0 for No):</label>
+            <input type="number" id="IsActiveMember" name="IsActiveMember" required>
+
+            <label for="EstimatedSalary">Estimated Salary:</label>
+            <input type="number" id="EstimatedSalary" name="EstimatedSalary" required>
+
+            <label for="SatisfactionScore">Satisfaction Score:</label>
+            <input type="number" id="SatisfactionScore" name="SatisfactionScore" required>
+
+            <label for="PointEarned">Point Earned:</label>
+            <input type="number" id="PointEarned" name="PointEarned" required>
+
+            <label for="Geography_France">Geography France (1 for Yes, 0 for No):</label>
+            <input type="number" id="Geography_France" name="Geography_France" required>
+
+            <label for="Geography_Germany">Geography Germany (1 for Yes, 0 for No):</label>
+            <input type="number" id="Geography_Germany" name="Geography_Germany" required>
+
+            <label for="Geography_Spain">Geography Spain (1 for Yes, 0 for No):</label>
+            <input type="number" id="Geography_Spain" name="Geography_Spain" required>
+
+            <label for="Gender_Female">Gender Female (1 for Yes, 0 for No):</label>
+            <input type="number" id="Gender_Female" name="Gender_Female" required>
+
+            <label for="Gender_Male">Gender Male (1 for Yes, 0 for No):</label>
+            <input type="number" id="Gender_Male" name="Gender_Male" required>
+
+            <label for="Card_Type_DIAMOND">Card Type DIAMOND (1 for Yes, 0 for No):</label>
+            <input type="number" id="Card_Type_DIAMOND" name="Card_Type_DIAMOND" required>
+
+            <label for="Card_Type_GOLD">Card Type GOLD (1 for Yes, 0 for No):</label>
+            <input type="number" id="Card_Type_GOLD" name="Card_Type_GOLD" required>
+
+            <label for="Card_Type_PLATINUM">Card Type PLATINUM (1 for Yes, 0 for No):</label>
+            <input type="number" id="Card_Type_PLATINUM" name="Card_Type_PLATINUM" required>
+
+            <label for="Card_Type_SILVER">Card Type SILVER (1 for Yes, 0 for No):</label>
+            <input type="number" id="Card_Type_SILVER" name="Card_Type_SILVER" required>
+
+            <button type="submit">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

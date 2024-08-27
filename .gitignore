@@ -1,0 +1,31 @@
+# Environnement virtuel
+venv/
+env/
+
+# Fichiers et dossiers de Python
+__pycache__/
+*.py[cod]
+*.pyofais moi html comem exemple:
+*.pyd
+
+# Fichiers de configuration de l'IDE
+.vscode/
+*.swp
+.idea/
+
+# Fichiers de logs
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.swp
+
+# Modèles et fichiers de données
+# *.pkl
+*.h5
+
+
+# Autres fichiers spécifiques au système
+.DS_Store
+Thumbs.db
