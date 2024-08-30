@@ -39,7 +39,6 @@ document.getElementById('predict-form').addEventListener('submit', async functio
         "Card Type_SILVER": cardType[document.getElementById("CardType").value][3]
     };
 
-    console.log('Data to send:', data);
 
     try {
         const response = await fetch('http://127.0.0.1:5000/predict', {
@@ -50,7 +49,6 @@ document.getElementById('predict-form').addEventListener('submit', async functio
             body: JSON.stringify(data)
         });
 
-        console.log('Server response status:', response.status);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -58,8 +56,71 @@ document.getElementById('predict-form').addEventListener('submit', async functio
 
         const result = await response.json();
         document.getElementById('result').innerText = `Result of Prediction of Churn: ${result.prediction}`;
+
+       
+        renderShapChart(result.explanation);
+
     } catch (error) {
-        console.error('Error:', error);
         document.getElementById('result').innerText = 'An error occurred. Please try again.';
     }
 });
+
+let shapChart;  
+
+function renderShapChart(explanation) {
+    const positiveValues = explanation.map(value => value[0] > 0 ? value[0] : 0);
+    const negativeValues = explanation.map(value => value[1] > 0 ? value[1] : 0);
+    const labels = [
+        'Credit Score', 'Age', 'Tenure', 'Balance', 'Num Of Products', 
+        'Has Credit Card', 'Is Active Member', 'Estimated Salary', 
+        'Satisfaction Score', 'Point Earned', 'Geography France', 
+        'Geography Germany', 'Geography Spain', 'Gender Female', 
+        'Gender Male', 'Card Type DIAMOND', 'Card Type GOLD', 
+        'Card Type PLATINUM', 'Card Type SILVER'
+    ];
+
+    if (shapChart) {
+        shapChart.destroy();
+    }
+
+    shapChart = new Chart(document.getElementById('shapChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Positive SHAP Values (Churn)',
+                    data: positiveValues,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',  
+                    borderColor: 'rgba(255, 99, 132, 1)',        
+                    borderWidth: 1
+                },
+                {
+                    label: 'Negative SHAP Values (Non-Churn)',
+                    data: negativeValues,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',  
+                    borderColor: 'rgba(54, 162, 235, 1)',       
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Features'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'SHAP Value'
+                    }
+                }
+            }
+        }
+    });
+}
