@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import sklearn  
 from flask_cors import CORS, cross_origin  # type: ignore
+import shap # type: ignore
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -14,6 +15,9 @@ with open('model/best_model.pkl', 'rb') as f:
 
 with open('model/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
+
+# Créer un explainer SHAP
+explainer = shap.TreeExplainer(model)
 
 @app.route('/predict', methods=['POST'])
 @cross_origin()
@@ -49,7 +53,19 @@ def predict():
     # Prédiction avec le modèle chargé
     prediction = model.predict(features_scaled)[0]
 
-    return jsonify({"prediction": int(prediction)})
+  
+    # Explicabilité
+    shap_values = explainer.shap_values(features_scaled)
+    
+    # Sélection de l'explication correcte
+    if isinstance(shap_values, list) and len(shap_values) > 1:
+        # Pour un modèle de classification avec plusieurs classes (e.g., binaire)
+        explanation = shap_values[1][0].tolist()  # Prendre la prédiction de classe 'Churn'
+    else:
+        # Pour un modèle avec une seule sortie
+        explanation = shap_values[0].tolist()  
+
+    return jsonify({"prediction": int(prediction), "explanation": explanation})
 
 if __name__ == '__main__':
     app.run(debug=False)
