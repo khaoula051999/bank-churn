@@ -121,3 +121,46 @@ Pour lancer le frontend de l'application de prédiction de churn, suivez les ét
    - Vous pouvez maintenant utiliser l'application en entrant les données requises dans le formulaire sur la page "Simulateur de Churn" et en cliquant sur "Predict Churn" pour obtenir la prédiction de churn.
 
 **Note :** Assurez-vous que le backend est en cours d'exécution avant de commencer à tester le frontend pour que l'application fonctionne correctement.
+
+## Description de l'application
+
+L'application **Churn Prediction** est une solution de prédiction de la fidélité des clients, basée sur un modèle de machine learning pré-entraîné. Elle permet de prédire la probabilité qu'un client quitte une banque en se basant sur des critères tels que le score de crédit, l'âge, le nombre de produits détenus, et d'autres facteurs financiers et démographiques.
+
+### Fonctionnalités principales
+
+1. **Simulateur de Churn** :
+
+   - Le simulateur permet à l'utilisateur d'entrer manuellement des informations sur un client spécifique pour obtenir une prédiction de churn en temps réel.
+   - Vous pouvez accéder au simulateur via le menu dans le frontend.
+
+   ![Page de simulation](assets/simulation.JPG)
+
+2. **Notifications** :
+
+   - Vous pouvez télécharger un fichier CSV contenant les informations de plusieurs clients via la page des notifications `notifications.html`. L'application analysera ces données et affichera les clients à risque de churn avec des recommandations sur les mesures à prendre.On a mis un fichier 'churn-test.csv' dans le fichiers assets afin de tester cette fonctionalité.
+     ![Notifications des clients à risque](assets/notifications.JPG)
+
+   - Chaque client pour lequel la prédiction montre un risque de churn (`1` pour un client susceptible de quitter la banque) est accompagné d'une explication basée sur les attributs principaux qui influencent la prédiction er recommendation de solution basé sur ces attributs qui ont menés au Churn.
+
+### Explication des prédictions
+
+L'application utilise la librairie **SHAP** (SHapley Additive exPlanations) pour fournir une explicabilité des modèles de machine learning. Pour chaque prédiction de churn, on identifie depusi les données d'explcabilité de SHAP identifie les trois principaux attributs qui influencent la décision, offrant ainsi aux utilisateurs des insights sur les raisons sous-jacentes de la prédiction.
+
+### Exemple d'utilisation
+
+1. **Tester un client individuel** :
+
+   - Via le simulateur de churn, entrez les données relatives à un client, telles que le score de crédit, l'âge, le solde, et le type de carte. Cliquez sur "Predict Churn" pour recevoir une prédiction et une explication des facteurs influençant cette décision.
+     ![Page de simulation](assets/simulation-resultat.JPG)
+
+2. **Téléchargement d'un fichier CSV** :
+
+   - Sur la page `notifications`, vous pouvez charger un fichier CSV contenant les informations de plusieurs clients. L'application analysera les données et fournira une liste des clients à risque de churn, ainsi que des recommandations spécifiques pour chaque client.
+    ![Notifications des clients à risque](assets/notificationcsv.JPG)
+
+
+3. **Recommandations personnalisées** :
+
+   - Pour chaque client à risque, l'application génère des recommandations en fonction des attributs influents (par exemple, augmenter le nombre de produits détenus ou améliorer la satisfaction du client).
+
+   ![Notifications des clients à risque](assets/notification-resultat.JPG)

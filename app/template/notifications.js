@@ -1,134 +1,167 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const uploadButton = document.getElementById('upload-btn');
-    const fileInput = document.getElementById('file-input');
-    const notificationResults = document.getElementById('notificationResults'); // Element to display results
+document.addEventListener("DOMContentLoaded", function () {
+  const uploadButton = document.getElementById("upload-btn");
+  const fileInput = document.getElementById("file-input");
+  const notificationResults = document.getElementById("notificationResults"); // Élément pour afficher les résultats
 
-    if (uploadButton && fileInput) {
-        uploadButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            const file = fileInput.files[0];
+  if (uploadButton && fileInput) {
+    uploadButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      const file = fileInput.files[0];
 
-            if (file) {
-                Papa.parse(file, {
-                    header: true,
-                    dynamicTyping: true,
-                    complete: function(results) {
-                        processCSVData(results.data);
-                    },
-                    error: function(error) {
-                        console.error("Error parsing CSV:", error);
-                    }
-                });
-            } else {
-                alert("Please select a CSV file to upload.");
-            }
+      if (file) {
+        Papa.parse(file, {
+          header: true,
+          dynamicTyping: true,
+          complete: function (results) {
+            processCSVData(results.data);
+          },
+          error: function (error) {
+            console.error("Erreur lors du parsing du fichier CSV:", error);
+          },
         });
-    } else {
-        console.error("Upload button or file input element not found in the DOM.");
-    }
+      } else {
+        alert("Veuillez sélectionner un fichier CSV.");
+      }
+    });
+  } else {
+    console.error(
+      "Le bouton d'upload ou l'input fichier est introuvable dans le DOM."
+    );
+  }
 });
 
 function processCSVData(data) {
-    if (!Array.isArray(data) || data.length === 0) {
-        console.error("CSV data is empty or not an array.");
-        return;
-    }
+  fetch("recommendations.json")
+    .then((response) => response.json())
+    .then((recommendations) => {
+      console.log("Recommandations chargées:", recommendations);
 
-    const geography = {
-        "france": [1, 0, 0],
-        "germany": [0, 1, 0],
-        "spain": [0, 0, 1]
-    };
-    const gender = {
-        "female": [1, 0],
-        "male": [0, 1]
-    };
-    const cardType = {
-        "diamond": [1, 0, 0, 0],
-        "gold": [0, 1, 0, 0],
-        "platinum": [0, 0, 1, 0],
-        "silver": [0, 0, 0, 1]
-    };
-
-    data.forEach(row => {
-        if (!row || Object.values(row).every(value => value === null || value === '')) {
-            console.warn("Empty or null row detected, skipping...");
-            return;
-        }
-
+      data.forEach((row) => {
         const geoKey = row["Geography"] ? row["Geography"].toLowerCase() : null;
         const genderKey = row["Gender"] ? row["Gender"].toLowerCase() : null;
-        const cardTypeKey = row["Card Type"] ? row["Card Type"].toLowerCase() : null;
+        const cardTypeKey = row["Card Type"]
+          ? row["Card Type"].toLowerCase()
+          : null;
 
-        if (geoKey in geography && genderKey in gender && cardTypeKey in cardType) {
-            const surname=row["Surname"]
-            const inputData = {
-                "CreditScore": row["CreditScore"],
-                "Age": row["Age"],
-                "Tenure": row["Tenure"],
-                "Balance": row["Balance"],
-                "NumOfProducts": row["NumOfProducts"],
-                "HasCrCard": row["HasCrCard"],
-                "IsActiveMember": row["IsActiveMember"],
-                "EstimatedSalary": row["EstimatedSalary"],
-                "Satisfaction Score": row["Satisfaction Score"],
-                "Point Earned": row["Point Earned"],
-                "Geography_France": geography[geoKey][0],
-                "Geography_Germany": geography[geoKey][1],
-                "Geography_Spain": geography[geoKey][2],
-                "Gender_Female": gender[genderKey][0],
-                "Gender_Male": gender[genderKey][1],
-                "Card Type_DIAMOND": cardType[cardTypeKey][0],
-                "Card Type_GOLD": cardType[cardTypeKey][1],
-                "Card Type_PLATINUM": cardType[cardTypeKey][2],
-                "Card Type_SILVER": cardType[cardTypeKey][3]
-            };
+        if (geoKey && genderKey && cardTypeKey) {
+          const inputData = {
+            CreditScore: row["CreditScore"],
+            Age: row["Age"],
+            Tenure: row["Tenure"],
+            Balance: row["Balance"],
+            NumOfProducts: row["NumOfProducts"],
+            HasCrCard: row["HasCrCard"],
+            IsActiveMember: row["IsActiveMember"],
+            EstimatedSalary: row["EstimatedSalary"],
+            "Satisfaction Score": row["Satisfaction Score"],
+            "Point Earned": row["Point Earned"],
+            Geography_France: geoKey === "france" ? 1 : 0,
+            Geography_Germany: geoKey === "germany" ? 1 : 0,
+            Geography_Spain: geoKey === "spain" ? 1 : 0,
+            Gender_Female: genderKey === "female" ? 1 : 0,
+            Gender_Male: genderKey === "male" ? 1 : 0,
+            "Card Type_DIAMOND": cardTypeKey === "diamond" ? 1 : 0,
+            "Card Type_GOLD": cardTypeKey === "gold" ? 1 : 0,
+            "Card Type_PLATINUM": cardTypeKey === "platinum" ? 1 : 0,
+            "Card Type_SILVER": cardTypeKey === "silver" ? 1 : 0,
+          };
 
-            fetchPrediction(inputData,surname);
+          fetchPrediction(
+            inputData,
+            row["Surname"],
+            row["CustomerId"],
+            row["Geography"],
+            recommendations
+          );
         } else {
-            console.error("Invalid categorical data in row:", {
-                Geography: row["Geography"],
-                Gender: row["Gender"],
-                "Card Type": row["Card Type"]
-            });
+          console.error("Données catégorielles invalides dans la ligne:", {
+            Geography: row["Geography"],
+            Gender: row["Gender"],
+            "Card Type": row["Card Type"],
+          });
         }
+      });
+    })
+    .catch((error) => {
+      console.error("Erreur lors du chargement des recommandations:", error);
     });
 }
 
-function fetchPrediction(data,surname) {
-    fetch('http://127.0.0.1:5000/predict', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+function fetchPrediction(
+  data,
+  surname,
+  customerId,
+  geography,
+  recommendations
+) {
+  fetch("http://127.0.0.1:5000/predict", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP ! Statut: ${response.status}`);
+      }
+      return response.json();
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(result => {
-        if(result.prediction===1){
-            console.log('Prediction result:', result);
+    .then((result) => {
+      if (result.prediction === 1) {
+        console.log("Résultat de la prédiction:", result);
 
-            // Display the result in the HTML
-            const titleResultElement = document.createElement('h3');
-            titleResultElement.textContent=`Risque du churn du client : ${surname}`
-            const resultElement = document.createElement('p');
-            resultElement.textContent = `Prediction result: ${result.prediction}`;
-            notificationResults.appendChild(titleResultElement);
-            notificationResults.appendChild(resultElement);
-        }
-        
-    })
-    .catch(error => {
-        console.error('Error fetching prediction:', error);
+        const topAttributes = getTopThreeAttributes(result.explanation, data);
 
-        // Display the error in the HTML
-        const errorElement = document.createElement('p');
-        errorElement.textContent = `Error: ${error.message}`;
-        notificationResults.appendChild(errorElement);
+        const titleResultElement = document.createElement("h3");
+        titleResultElement.textContent = `Risque du churn du client (Nom:${surname} , Pays: ${geography})`;
+
+        const resultElement = document.createElement("p");
+        resultElement.textContent = `Résultat de la prédiction : Churn à risque`;
+
+        const attributesElement = document.createElement("p");
+        attributesElement.textContent = `Top 3 attributs contribuant au churn : ${topAttributes.join(
+          ", "
+        )}`;
+
+        const recommendationsElement = document.createElement("p");
+        recommendationsElement.textContent = `Conseils : ${getRecommendationsForAttributes(
+          topAttributes,
+          recommendations
+        ).join(", ")}`;
+
+        notificationResults.appendChild(titleResultElement);
+        notificationResults.appendChild(resultElement);
+        notificationResults.appendChild(attributesElement);
+        notificationResults.appendChild(recommendationsElement);
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la prédiction:", error);
+      const errorElement = document.createElement("p");
+      errorElement.textContent = `Erreur : ${error.message}`;
+      notificationResults.appendChild(errorElement);
     });
+}
+
+function getTopThreeAttributes(explanation, data) {
+  const attributeNames = Object.keys(data);
+  const attributesWithContribution = explanation.map((value, index) => ({
+    name: attributeNames[index],
+    contribution: Math.abs(value[0]),
+  }));
+
+  attributesWithContribution.sort((a, b) => b.contribution - a.contribution);
+  const topAttributes = attributesWithContribution
+    .slice(0, 3)
+    .map((attr) => attr.name);
+  console.log("Top 3 attributs:", topAttributes);
+  return topAttributes;
+}
+
+function getRecommendationsForAttributes(attributes, recommendations) {
+  return attributes.map((attr) => {
+    const recommendation = recommendations[attr];
+    return recommendation || "Aucune recommandation trouvée";
+  });
 }
