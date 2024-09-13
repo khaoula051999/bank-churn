@@ -156,7 +156,7 @@ L'application utilise la librairie **SHAP** (SHapley Additive exPlanations) pour
 2. **Téléchargement d'un fichier CSV** :
 
    - Sur la page `notifications`, vous pouvez charger un fichier CSV contenant les informations de plusieurs clients. L'application analysera les données et fournira une liste des clients à risque de churn, ainsi que des recommandations spécifiques pour chaque client.
-    ![Notifications des clients à risque](assets/notificationcsv.JPG)
+    ![Notifications des clients à risque](assets/notigicationcsv.JPG)
 
 
 3. **Recommandations personnalisées** :
