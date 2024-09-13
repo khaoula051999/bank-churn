@@ -1,5 +1,8 @@
+# Churn Prediction Application
+ - L'application **Churn Prediction** est une solution de prédiction de la fidélité des clients, basée sur un modèle de machine learning pré-entraîné. Elle permet de prédire la probabilité qu'un client quitte une banque en se basant sur des critères tels que le score de crédit, l'âge, le nombre de produits détenus, et d'autres facteurs financiers et démographiques.
+ - Le document 'Projet iA_Churn bancaire_KhaoulaA_ManuelFB_IsmailO.pdf' sur ce git donne explication du projet dans tous ces aspects .
+ - Les notebooks sur l'analyse EDA des données aussi bien que le notebbok du modèle et les données osnt dans le dossier app/model dans ce git
 # Churn Prediction API
-
 Cette API utilise Flask pour fournir des prédictions de churn basées sur un modèle de machine learning pré-entraîné.
 
 ## Prérequis
@@ -123,8 +126,6 @@ Pour lancer le frontend de l'application de prédiction de churn, suivez les ét
 **Note :** Assurez-vous que le backend est en cours d'exécution avant de commencer à tester le frontend pour que l'application fonctionne correctement.
 
 ## Description de l'application
-
-L'application **Churn Prediction** est une solution de prédiction de la fidélité des clients, basée sur un modèle de machine learning pré-entraîné. Elle permet de prédire la probabilité qu'un client quitte une banque en se basant sur des critères tels que le score de crédit, l'âge, le nombre de produits détenus, et d'autres facteurs financiers et démographiques.
 
 ### Fonctionnalités principales
 
