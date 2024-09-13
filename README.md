@@ -1,3 +1,9 @@
+# Churn Prediction Application
+
+- L'application **Churn Prediction** est une solution de prédiction de la fidélité des clients, basée sur un modèle de machine learning pré-entraîné. Elle permet de prédire la probabilité qu'un client quitte une banque en se basant sur des critères tels que le score de crédit, l'âge, le nombre de produits détenus, et d'autres facteurs financiers et démographiques.
+- Le document `Projet iA_Churn bancaire_KhaoulaA_ManuelFB_IsmailO.pdf` sur ce git donne une explication du projet dans tous ses aspects.
+- Les notebooks sur l'analyse EDA des données ainsi que le notebook du modèle et les données sont dans le dossier `app/model` dans ce git.
+
 # Churn Prediction API
 
 Cette API utilise Flask pour fournir des prédictions de churn basées sur un modèle de machine learning pré-entraîné.
@@ -124,8 +130,6 @@ Pour lancer le frontend de l'application de prédiction de churn, suivez les ét
 
 ## Description de l'application
 
-L'application **Churn Prediction** est une solution de prédiction de la fidélité des clients, basée sur un modèle de machine learning pré-entraîné. Elle permet de prédire la probabilité qu'un client quitte une banque en se basant sur des critères tels que le score de crédit, l'âge, le nombre de produits détenus, et d'autres facteurs financiers et démographiques.
-
 ### Fonctionnalités principales
 
 1. **Simulateur de Churn** :
@@ -137,14 +141,14 @@ L'application **Churn Prediction** est une solution de prédiction de la fidéli
 
 2. **Notifications** :
 
-   - Vous pouvez télécharger un fichier CSV contenant les informations de plusieurs clients via la page des notifications `notifications.html`. L'application analysera ces données et affichera les clients à risque de churn avec des recommandations sur les mesures à prendre.On a mis un fichier 'churn-test.csv' dans le fichiers assets afin de tester cette fonctionalité.
+   - Vous pouvez télécharger un fichier CSV contenant les informations de plusieurs clients via la page des notifications `notifications.html`. L'application analysera ces données et affichera les clients à risque de churn avec des recommandations sur les mesures à prendre.On a mis un fichier `churn-test.csv` dans le fichiers assets afin de tester cette fonctionalité.
      ![Notifications des clients à risque](assets/notifications.JPG)
 
-   - Chaque client pour lequel la prédiction montre un risque de churn (`1` pour un client susceptible de quitter la banque) est accompagné d'une explication basée sur les attributs principaux qui influencent la prédiction er recommendation de solution basé sur ces attributs qui ont menés au Churn.
+   - Chaque client pour lequel la prédiction montre un risque de churn (`1` pour un client susceptible de quitter la banque) est accompagné d'une explication basée sur les attributs principaux qui influencent la prédiction et de recommendations de solution basé sur ces attributs qui ont menés au Churn.
 
 ### Explication des prédictions
 
-L'application utilise la librairie **SHAP** (SHapley Additive exPlanations) pour fournir une explicabilité des modèles de machine learning. Pour chaque prédiction de churn, on identifie depusi les données d'explcabilité de SHAP identifie les trois principaux attributs qui influencent la décision, offrant ainsi aux utilisateurs des insights sur les raisons sous-jacentes de la prédiction.
+L'application utilise la librairie **SHAP** (SHapley Additive exPlanations) pour fournir une explicabilité des modèles de machine learning. Pour chaque prédiction de churn, on depuis les données d'explcabilité de SHAP identifie les trois principaux attributs qui influencent la décision, offrant ainsi aux utilisateurs des insights sur les raisons sous-jacentes de la prédiction.
 
 ### Exemple d'utilisation
 
@@ -156,8 +160,7 @@ L'application utilise la librairie **SHAP** (SHapley Additive exPlanations) pour
 2. **Téléchargement d'un fichier CSV** :
 
    - Sur la page `notifications`, vous pouvez charger un fichier CSV contenant les informations de plusieurs clients. L'application analysera les données et fournira une liste des clients à risque de churn, ainsi que des recommandations spécifiques pour chaque client.
-    ![Notifications des clients à risque](assets/notigificationcsv.JPG)
-
+     ![Notifications des clients à risque](assets/notigicationcsv.JPG)
 
 3. **Recommandations personnalisées** :
 
