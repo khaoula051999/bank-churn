@@ -1,0 +1,21 @@
+{
+  "CreditScore": "Encouragez vos clients à améliorer leur score de crédit avec des conseils personnalisés.",
+  "Age": "Proposez des produits financiers adaptés à l'âge, comme des comptes d'épargne compétitifs pour les jeunes ou des solutions de gestion de patrimoine pour les clients plus âgés.",
+  "Tenure": "Renforcez la fidélité des clients en leur offrant des programmes de fidélité ou des récompenses pour leur ancienneté.",
+  "Balance": "Pour les clients avec un solde élevé, proposez des produits financiers premium, et pour ceux avec un solde faible, offrez des outils d'épargne automatisée.",
+  "NumOfProducts": "Encouragez l'utilisation de plusieurs produits bancaires avec des offres spéciales ou des promotions.",
+  "HasCrCard": "Proposez des récompenses ou des avantages pour l'utilisation régulière de la carte de crédit.",
+  "IsActiveMember": "Motivez les clients actifs à rester engagés avec des avantages exclusifs et des offres personnalisées.",
+  "EstimatedSalary": "Proposez des solutions financières sur mesure en fonction du salaire estimé, comme des prêts à faible taux d'intérêt pour ceux qui en ont besoin.",
+  "SatisfactionScore": "Améliorez l'expérience client en tenant compte des scores de satisfaction et en offrant un service client de qualité.",
+  "PointEarned": "Récompensez les clients en fonction des points gagnés, en leur offrant des avantages exclusifs ou des réductions.",
+  "Geography_France": "Offrez des avantages spécifiques pour vos clients en France, adaptés à leur localisation.",
+  "Geography_Germany": "Offrez des produits financiers en lien avec les besoins du marché allemand.",
+  "Geography_Spain": "Proposez des solutions spécifiques pour les clients en Espagne, comme des produits financiers adaptés aux lois locales.",
+  "Gender_Female": "Proposez des produits financiers adaptés aux femmes, avec des offres qui correspondent à leurs besoins.",
+  "Gender_Male": "Offrez des solutions financières adaptées aux hommes, avec des avantages et des produits spécifiques.",
+  "CardType_DIAMOND": "Proposez des services premium pour les détenteurs de cartes DIAMOND, comme des taux d'intérêt préférentiels.",
+  "CardType_GOLD": "Offrez des avantages exclusifs pour les détenteurs de cartes GOLD, comme des réductions sur les services bancaires.",
+  "CardType_PLATINUM": "Mettez en avant des avantages premium pour les détenteurs de cartes PLATINUM, comme des conseils financiers personnalisés.",
+  "CardType_SILVER": "Encouragez l'utilisation des cartes SILVER en proposant des avantages supplémentaires, comme du cashback ou des réductions."
+}
